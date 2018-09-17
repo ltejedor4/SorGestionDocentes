@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="df030d44bb8d46b28cf9ceb874f28513" Name="Diagram1">
+        <EntityTypeShape EntityType="GestionDocenteModel.DepartamentosAcademicos" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionDocenteModel.DocenteMateria" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionDocenteModel.Materias" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionDocenteModel.Modulos" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="GestionDocenteModel.FK_Materia_DptoAcademico" ManuallyRouted="false" />
+        <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_Materia" ManuallyRouted="false" />
+        <AssociationConnector Association="GestionDocenteModel.FK_Modulo_Materia" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GestionDocenteModel.DocenteScore" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" />
+        <EntityTypeShape EntityType="GestionDocenteModel.Psicologos" Width="1.5" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GestionDocenteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DepartamentosAcademicos">
+          <Key>
+            <PropertyRef Name="DptoAcademicoId" />
+          </Key>
+          <Property Name="DptoAcademicoId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Responsable" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocenteMateria">
+          <Key>
+            <PropertyRef Name="MateriaxDocenteId" />
+          </Key>
+          <Property Name="MateriaxDocenteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MateriaId" Type="smallint" Nullable="false" />
+          <Property Name="ScoreDocenteId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocenteScore">
+          <Key>
+            <PropertyRef Name="DocenteScoreId" />
+          </Key>
+          <Property Name="DocenteScoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombreDocente" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HorasActuales" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="NivelEstudio" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Evaluacion" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="Ausentismos" Type="tinyint" Nullable="false" />
+          <Property Name="CargaNotas" Type="bit" Nullable="false" />
+          <Property Name="Porcentaje" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Materias">
+          <Key>
+            <PropertyRef Name="MateriaId" />
+          </Key>
+          <Property Name="MateriaId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DeptoAcademicoId" Type="tinyint" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modulos">
+          <Key>
+            <PropertyRef Name="ModuloId" />
+          </Key>
+          <Property Name="ModuloId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFin" Type="datetime" Nullable="false" />
+          <Property Name="HorasTotales" Type="smallint" Nullable="false" />
+          <Property Name="HorasSemana" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Psicologo" Type="varchar" MaxLength="255" />
+          <Property Name="EsPago" Type="bit" Nullable="false" />
+          <Property Name="Asignado" Type="bit" Nullable="false" />
+          <Property Name="MateriaId" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Psicologos">
+          <Key>
+            <PropertyRef Name="PsicologoId" />
+          </Key>
+          <Property Name="PsicologoId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DocenteMateria_Materia">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
+          <End Role="DocenteMateria" Type="Self.DocenteMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="MateriaId" />
+            </Principal>
+            <Dependent Role="DocenteMateria">
+              <PropertyRef Name="MateriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocenteMateria_ScoreDocente">
+          <End Role="DocenteScore" Type="Self.DocenteScore" Multiplicity="1" />
+          <End Role="DocenteMateria" Type="Self.DocenteMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocenteScore">
+              <PropertyRef Name="DocenteScoreId" />
+            </Principal>
+            <Dependent Role="DocenteMateria">
+              <PropertyRef Name="ScoreDocenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materia_DptoAcademico">
+          <End Role="DepartamentosAcademicos" Type="Self.DepartamentosAcademicos" Multiplicity="1" />
+          <End Role="Materias" Type="Self.Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentosAcademicos">
+              <PropertyRef Name="DptoAcademicoId" />
+            </Principal>
+            <Dependent Role="Materias">
+              <PropertyRef Name="DeptoAcademicoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modulo_Materia">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="MateriaId" />
+            </Principal>
+            <Dependent Role="Modulos">
+              <PropertyRef Name="MateriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionDocenteModelStoreContainer">
+          <EntitySet Name="DepartamentosAcademicos" EntityType="Self.DepartamentosAcademicos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocenteMateria" EntityType="Self.DocenteMateria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocenteScore" EntityType="Self.DocenteScore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materias" EntityType="Self.Materias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modulos" EntityType="Self.Modulos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Psicologos" EntityType="Self.Psicologos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DocenteMateria_Materia" Association="Self.FK_DocenteMateria_Materia">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="DocenteMateria" EntitySet="DocenteMateria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocenteMateria_ScoreDocente" Association="Self.FK_DocenteMateria_ScoreDocente">
+            <End Role="DocenteScore" EntitySet="DocenteScore" />
+            <End Role="DocenteMateria" EntitySet="DocenteMateria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materia_DptoAcademico" Association="Self.FK_Materia_DptoAcademico">
+            <End Role="DepartamentosAcademicos" EntitySet="DepartamentosAcademicos" />
+            <End Role="Materias" EntitySet="Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modulo_Materia" Association="Self.FK_Modulo_Materia">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GestionDocenteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DepartamentosAcademicos">
+          <Key>
+            <PropertyRef Name="DptoAcademicoId" />
+          </Key>
+          <Property Name="DptoAcademicoId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Responsable" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Materias" Relationship="Self.FK_Materia_DptoAcademico" FromRole="DepartamentosAcademicos" ToRole="Materias" />
+        </EntityType>
+        <EntityType Name="DocenteMateria">
+          <Key>
+            <PropertyRef Name="MateriaxDocenteId" />
+          </Key>
+          <Property Name="MateriaxDocenteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MateriaId" Type="Int16" Nullable="false" />
+          <Property Name="ScoreDocenteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Materias" Relationship="Self.FK_DocenteMateria_Materia" FromRole="DocenteMateria" ToRole="Materias" />
+          <NavigationProperty Name="DocenteScore" Relationship="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" FromRole="DocenteMateria" ToRole="DocenteScore" />
+        </EntityType>
+        <EntityType Name="Materias">
+          <Key>
+            <PropertyRef Name="MateriaId" />
+          </Key>
+          <Property Name="MateriaId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeptoAcademicoId" Type="Byte" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DepartamentosAcademicos" Relationship="Self.FK_Materia_DptoAcademico" FromRole="Materias" ToRole="DepartamentosAcademicos" />
+          <NavigationProperty Name="DocenteMateria" Relationship="Self.FK_DocenteMateria_Materia" FromRole="Materias" ToRole="DocenteMateria" />
+          <NavigationProperty Name="Modulos" Relationship="Self.FK_Modulo_Materia" FromRole="Materias" ToRole="Modulos" />
+        </EntityType>
+        <EntityType Name="Modulos">
+          <Key>
+            <PropertyRef Name="ModuloId" />
+          </Key>
+          <Property Name="ModuloId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HorasTotales" Type="Int16" Nullable="false" />
+          <Property Name="HorasSemana" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Psicologo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EsPago" Type="Boolean" Nullable="false" />
+          <Property Name="Asignado" Type="Boolean" Nullable="false" />
+          <Property Name="MateriaId" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Materias" Relationship="Self.FK_Modulo_Materia" FromRole="Modulos" ToRole="Materias" />
+        </EntityType>
+        <Association Name="FK_Materia_DptoAcademico">
+          <End Role="DepartamentosAcademicos" Type="Self.DepartamentosAcademicos" Multiplicity="1" />
+          <End Role="Materias" Type="Self.Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentosAcademicos">
+              <PropertyRef Name="DptoAcademicoId" />
+            </Principal>
+            <Dependent Role="Materias">
+              <PropertyRef Name="DeptoAcademicoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocenteMateria_Materia">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
+          <End Role="DocenteMateria" Type="Self.DocenteMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="MateriaId" />
+            </Principal>
+            <Dependent Role="DocenteMateria">
+              <PropertyRef Name="MateriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modulo_Materia">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="MateriaId" />
+            </Principal>
+            <Dependent Role="Modulos">
+              <PropertyRef Name="MateriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionDocenteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DepartamentosAcademicos" EntityType="Self.DepartamentosAcademicos" />
+          <EntitySet Name="DocenteMateria" EntityType="Self.DocenteMateria" />
+          <EntitySet Name="Materias" EntityType="Self.Materias" />
+          <EntitySet Name="Modulos" EntityType="Self.Modulos" />
+          <AssociationSet Name="FK_Materia_DptoAcademico" Association="Self.FK_Materia_DptoAcademico">
+            <End Role="DepartamentosAcademicos" EntitySet="DepartamentosAcademicos" />
+            <End Role="Materias" EntitySet="Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocenteMateria_Materia" Association="Self.FK_DocenteMateria_Materia">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="DocenteMateria" EntitySet="DocenteMateria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modulo_Materia" Association="Self.FK_Modulo_Materia">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+          <EntitySet Name="DocenteScore" EntityType="GestionDocenteModel.DocenteScore" />
+          <AssociationSet Name="FK_DocenteMateria_ScoreDocente" Association="GestionDocenteModel.FK_DocenteMateria_ScoreDocente">
+            <End Role="DocenteScore" EntitySet="DocenteScore" />
+            <End Role="DocenteMateria" EntitySet="DocenteMateria" />
+          </AssociationSet>
+          <EntitySet Name="Psicologos" EntityType="GestionDocenteModel.Psicologos" />
+        </EntityContainer>
+        <EntityType Name="DocenteScore">
+          <Key>
+            <PropertyRef Name="DocenteScoreId" />
+          </Key>
+          <Property Name="DocenteScoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreDocente" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HorasActuales" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+          <Property Name="NivelEstudio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Evaluacion" Type="Decimal" Nullable="false" Precision="3" Scale="2" />
+          <Property Name="Ausentismos" Type="Byte" Nullable="false" />
+          <Property Name="CargaNotas" Type="Boolean" Nullable="false" />
+          <Property Name="Porcentaje" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="DocenteMateria" Relationship="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" FromRole="DocenteScore" ToRole="DocenteMateria" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_DocenteMateria_ScoreDocente">
+          <End Type="GestionDocenteModel.DocenteScore" Role="DocenteScore" Multiplicity="1" />
+          <End Type="GestionDocenteModel.DocenteMateria" Role="DocenteMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocenteScore">
+              <PropertyRef Name="DocenteScoreId" />
+            </Principal>
+            <Dependent Role="DocenteMateria">
+              <PropertyRef Name="ScoreDocenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Psicologos">
+          <Key>
+            <PropertyRef Name="PsicologoId" />
+          </Key>
+          <Property Name="PsicologoId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GestionDocenteModelStoreContainer" CdmEntityContainer="GestionDocenteEntities">
+          <EntitySetMapping Name="DepartamentosAcademicos">
+            <EntityTypeMapping TypeName="GestionDocenteModel.DepartamentosAcademicos">
+              <MappingFragment StoreEntitySet="DepartamentosAcademicos">
+                <ScalarProperty Name="DptoAcademicoId" ColumnName="DptoAcademicoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Responsable" ColumnName="Responsable" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocenteMateria">
+            <EntityTypeMapping TypeName="GestionDocenteModel.DocenteMateria">
+              <MappingFragment StoreEntitySet="DocenteMateria">
+                <ScalarProperty Name="MateriaxDocenteId" ColumnName="MateriaxDocenteId" />
+                <ScalarProperty Name="MateriaId" ColumnName="MateriaId" />
+                <ScalarProperty Name="ScoreDocenteId" ColumnName="ScoreDocenteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materias">
+            <EntityTypeMapping TypeName="GestionDocenteModel.Materias">
+              <MappingFragment StoreEntitySet="Materias">
+                <ScalarProperty Name="MateriaId" ColumnName="MateriaId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="DeptoAcademicoId" ColumnName="DeptoAcademicoId" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulos">
+            <EntityTypeMapping TypeName="GestionDocenteModel.Modulos">
+              <MappingFragment StoreEntitySet="Modulos">
+                <ScalarProperty Name="ModuloId" ColumnName="ModuloId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="HorasTotales" ColumnName="HorasTotales" />
+                <ScalarProperty Name="HorasSemana" ColumnName="HorasSemana" />
+                <ScalarProperty Name="Psicologo" ColumnName="Psicologo" />
+                <ScalarProperty Name="EsPago" ColumnName="EsPago" />
+                <ScalarProperty Name="Asignado" ColumnName="Asignado" />
+                <ScalarProperty Name="MateriaId" ColumnName="MateriaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocenteScore">
+            <EntityTypeMapping TypeName="GestionDocenteModel.DocenteScore">
+              <MappingFragment StoreEntitySet="DocenteScore">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="CargaNotas" ColumnName="CargaNotas" />
+                <ScalarProperty Name="Ausentismos" ColumnName="Ausentismos" />
+                <ScalarProperty Name="Evaluacion" ColumnName="Evaluacion" />
+                <ScalarProperty Name="NivelEstudio" ColumnName="NivelEstudio" />
+                <ScalarProperty Name="HorasActuales" ColumnName="HorasActuales" />
+                <ScalarProperty Name="NombreDocente" ColumnName="NombreDocente" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="DocenteScoreId" ColumnName="DocenteScoreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Psicologos">
+            <EntityTypeMapping TypeName="GestionDocenteModel.Psicologos">
+              <MappingFragment StoreEntitySet="Psicologos">
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="PsicologoId" ColumnName="PsicologoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
