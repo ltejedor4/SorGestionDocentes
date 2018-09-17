@@ -7,6 +7,10 @@ namespace Sor.Controllers
 {
     public class DepartamentosAcademicosController : ApiController
     {
+        /// <summary>
+        /// Consulta de todos los departamentos académicos
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult Get()
         {
             List<DepartamentosAcademicos> departamentos = new List<DepartamentosAcademicos>();
