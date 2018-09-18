@@ -1,4 +1,5 @@
 ﻿using Sor.Models.EDM;
+using Sor.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,19 +23,18 @@ namespace Sor.Controllers
                     foreach (var docente in docentesGeneral)
                     {
                         //TODO: Consumir servio BRMS
-                        //var docenteJava = ConvertJava.NetToJava(docente);
-                        //docenteJava.horasActuales += modulo.HorasSemana;
-                        //var response = await ConsultaApi.Post<DocenteScore>("http://localhost:8080/", "gestionDocente", docenteJava);
-                        //if (response.IsSuccess)
-                        //{
-                        //    DocenteScore result = (DocenteScore)response.Result;
-                        //    if (result != null && result.DocenteScoreId > 0)
-                        //    {
-                        //docente.Porcentaje = result.Porcentaje;
-                        docente.Porcentaje = 100;
-                        docentesFinal.Add(docente);
-                        //}
-                        //}
+                        var docenteJava = ConvertJava.NetToJava(docente);
+                        docenteJava.horasActuales += modulo.HorasSemana;
+                        var response = await ConsultaApi.Post<DocenteScore>("https://reglasgestiondocente.herokuapp.com/", "getScore", docenteJava);
+                        if (response.IsSuccess)
+                        {
+                            DocenteScore result = (DocenteScore)response.Result;
+                            if (result != null && result.DocenteScoreId > 0)
+                            {
+                                docente.Porcentaje = result.Porcentaje;                                
+                                docentesFinal.Add(docente);
+                            }
+                        }
                     }
                 }
             }
