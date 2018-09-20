@@ -1,4 +1,5 @@
-﻿using Sor.Models.EDM;
+﻿using Sor.Models;
+using Sor.Models.EDM;
 using Sor.Utilities;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +13,25 @@ namespace Sor.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> DocentesSugeridos(int moduloId)
         {
-            List<DocenteScore> docentesFinal = new List<DocenteScore>();
+            List<DetalleTerna> docentesFinal = new List<DetalleTerna>();
             using (var db = new GestionDocenteEntities())
             {
                 var existeTerna = db.TernasxModulo.Include("DocenteScore").Where(x => x.ModuloId == moduloId && !x.Rechazado).ToList()
-                    .Select(x => new DocenteScore()
+                    .Select(x => new DetalleTerna()
                     {
                         DocenteScoreId = x.DocenteScoreId,
                         Cedula = x.DocenteScore.Cedula,
                         NombreDocente = x.DocenteScore.NombreDocente,
                         HorasActuales = x.DocenteScore.HorasActuales,
                         NivelEstudio = x.DocenteScore.NivelEstudio,
-                        Evaluacion = x.DocenteScore.Evaluacion,
+                        EvaluacionEstudiante = x.DocenteScore.Evaluacion,
                         Ausentismos = x.DocenteScore.Ausentismos,
                         CargaNotas = x.DocenteScore.CargaNotas,
                         Porcentaje = x.DocenteScore.Porcentaje,
                         Email = x.DocenteScore.Email,
-                        Twiter = x.DocenteScore.Twiter
-                    }).ToList<DocenteScore>();
+                        Twiter = x.DocenteScore.Twiter,
+                        CalificacionDelPsicologo = x.CalificacionDelPsicologo
+                    }).ToList<DetalleTerna>();
 
                 if (existeTerna != null && existeTerna.Count > 0)                
                     docentesFinal = existeTerna;                
@@ -39,20 +41,20 @@ namespace Sor.Controllers
                     if (modulo != null && modulo.ModuloId > 0)
                     {
                         var docentesGeneral = db.DocenteScore.Where(x => x.DocenteMateria.Any(p => p.MateriaId == modulo.MateriaId)).ToList()
-                            .Select(x => new DocenteScore()
+                            .Select(x => new DetalleTerna()
                             {
                                 DocenteScoreId = x.DocenteScoreId,
                                 Cedula = x.Cedula,
                                 NombreDocente = x.NombreDocente,
                                 HorasActuales = x.HorasActuales,
                                 NivelEstudio = x.NivelEstudio,
-                                Evaluacion = x.Evaluacion,
+                                EvaluacionEstudiante = x.Evaluacion,
                                 Ausentismos = x.Ausentismos,
                                 CargaNotas = x.CargaNotas,
                                 Porcentaje = x.Porcentaje,
                                 Email = x.Email,
                                 Twiter = x.Twiter
-                            }).ToList<DocenteScore>();
+                            }).ToList<DetalleTerna>();
 
                         foreach (var docente in docentesGeneral)
                         {                            

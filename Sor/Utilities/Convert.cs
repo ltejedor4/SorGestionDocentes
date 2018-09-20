@@ -5,7 +5,7 @@ namespace Sor.Utilities
 {
     public class ConvertJava
     {
-        public static DocenteScoreJava NetToJava(DocenteScore docenteScore)
+        public static DocenteScoreJava NetToJava(DetalleTerna docenteScore)
         {
             DocenteScoreJava objJava = new DocenteScoreJava()
             {
@@ -14,7 +14,7 @@ namespace Sor.Utilities
                 porcentaje = docenteScore.Porcentaje,
                 nombreDocente = docenteScore.NombreDocente,
                 horasActuales = docenteScore.HorasActuales,
-                evaluacion = docenteScore.Evaluacion,
+                evaluacion = docenteScore.EvaluacionEstudiante,
                 cargaNotas = docenteScore.CargaNotas,
                 ausentismos = docenteScore.Ausentismos
             };
