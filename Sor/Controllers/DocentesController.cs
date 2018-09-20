@@ -15,7 +15,7 @@ namespace Sor.Controllers
             List<DocenteScore> docentesFinal = new List<DocenteScore>();
             using (var db = new GestionDocenteEntities())
             {
-                var existeTerna = db.TernasxModulo.Include("DocenteScore").Where(x => x.ModuloId == moduloId).ToList()
+                var existeTerna = db.TernasxModulo.Include("DocenteScore").Where(x => x.ModuloId == moduloId && !x.Rechazado).ToList()
                     .Select(x => new DocenteScore()
                     {
                         DocenteScoreId = x.DocenteScoreId,
@@ -28,7 +28,7 @@ namespace Sor.Controllers
                         CargaNotas = x.DocenteScore.CargaNotas,
                         Porcentaje = x.DocenteScore.Porcentaje,
                         Email = x.DocenteScore.Email,
-                        twiter = x.DocenteScore.twiter
+                        Twiter = x.DocenteScore.Twiter
                     }).ToList<DocenteScore>();
 
                 if (existeTerna != null && existeTerna.Count > 0)                
@@ -51,12 +51,11 @@ namespace Sor.Controllers
                                 CargaNotas = x.CargaNotas,
                                 Porcentaje = x.Porcentaje,
                                 Email = x.Email,
-                                twiter = x.twiter
+                                Twiter = x.Twiter
                             }).ToList<DocenteScore>();
 
                         foreach (var docente in docentesGeneral)
-                        {
-                            //TODO: Consumir servicio BRMS
+                        {                            
                             var docenteJava = ConvertJava.NetToJava(docente);
                             docenteJava.horasActuales += modulo.HorasSemana;
                             var response = await ConsultaApi.Post<DocenteScore>("https://reglasgestiondocente.herokuapp.com/", "getScore", docenteJava);
@@ -68,7 +67,6 @@ namespace Sor.Controllers
                                     docente.Porcentaje = result.Porcentaje;
                                     docentesFinal.Add(docente);
                                 }
-
                             }
                         }
                     }

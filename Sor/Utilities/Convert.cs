@@ -11,7 +11,7 @@ namespace Sor.Utilities
             {
                 docenteScoreId = docenteScore.DocenteScoreId,
                 nivelEstudio = docenteScore.NivelEstudio,
-                porcentaje = 100,
+                porcentaje = docenteScore.Porcentaje,
                 nombreDocente = docenteScore.NombreDocente,
                 horasActuales = docenteScore.HorasActuales,
                 evaluacion = docenteScore.Evaluacion,

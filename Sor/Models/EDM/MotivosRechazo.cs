@@ -24,6 +24,7 @@ namespace Sor.Models.EDM
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public bool Estado { get; set; }
+        public decimal PuntosDescuento { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TernasxModulo> TernasxModulo { get; set; }

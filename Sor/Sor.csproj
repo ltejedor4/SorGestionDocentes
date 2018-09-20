@@ -200,6 +200,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetalleTerna.cs" />
     <Compile Include="Models\DocenteScoreJava.cs" />
     <Compile Include="Models\EDM\DepartamentosAcademicos.cs">
       <DependentUpon>GestionDocenteEDM.tt</DependentUpon>

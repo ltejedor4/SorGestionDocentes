@@ -31,7 +31,7 @@ namespace Sor.Models.EDM
         public bool CargaNotas { get; set; }
         public Nullable<decimal> Porcentaje { get; set; }
         public string Email { get; set; }
-        public string twiter { get; set; }
+        public string Twiter { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteMateria> DocenteMateria { get; set; }

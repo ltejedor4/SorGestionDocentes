@@ -13,10 +13,10 @@
         <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_Materia" ManuallyRouted="false" />
         <AssociationConnector Association="GestionDocenteModel.FK_Modulo_Materia" ManuallyRouted="false" />
         <EntityTypeShape EntityType="GestionDocenteModel.Psicologos" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="GestionDocenteModel.DocenteScore" Width="1.5" PointX="1" PointY="0.75" />
-        <EntityTypeShape EntityType="GestionDocenteModel.MotivosRechazo" Width="1.5" PointX="5.25" PointY="11.875" />
-        <EntityTypeShape EntityType="GestionDocenteModel.TernasxModulo" Width="1.5" PointX="7.5" PointY="4.375" />
+        <EntityTypeShape EntityType="GestionDocenteModel.DocenteScore" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="GestionDocenteModel.MotivosRechazo" Width="1.5" PointX="6.125" PointY="0.875" />
         <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" />
+        <EntityTypeShape EntityType="GestionDocenteModel.TernasxModulo" Width="1.5" PointX="8.375" PointY="4.375" />
         <AssociationConnector Association="GestionDocenteModel.FK_Terna_DocenteScore" />
         <AssociationConnector Association="GestionDocenteModel.FK_Terna_ModuloId" />
         <AssociationConnector Association="GestionDocenteModel.Fk_MotivoRechazo" />

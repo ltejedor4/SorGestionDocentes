@@ -20,7 +20,7 @@ namespace Sor.Models.EDM
         public bool Rechazado { get; set; }
         public Nullable<byte> MotivoRechazoId { get; set; }
         public bool Asignado { get; set; }
-        public string CalificacionDocente { get; set; }
+        public string CalificacionDelPsicologo { get; set; }
     
         public virtual DocenteScore DocenteScore { get; set; }
         public virtual Modulos Modulos { get; set; }
