@@ -18,6 +18,7 @@ namespace Sor.Models.EDM
         public DocenteScore()
         {
             this.DocenteMateria = new HashSet<DocenteMateria>();
+            this.TernasxModulo = new HashSet<TernasxModulo>();
         }
     
         public int DocenteScoreId { get; set; }
@@ -30,8 +31,11 @@ namespace Sor.Models.EDM
         public bool CargaNotas { get; set; }
         public Nullable<decimal> Porcentaje { get; set; }
         public string Email { get; set; }
+        public string twiter { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteMateria> DocenteMateria { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TernasxModulo> TernasxModulo { get; set; }
     }
 }

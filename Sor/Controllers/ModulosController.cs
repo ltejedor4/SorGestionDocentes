@@ -75,6 +75,7 @@ namespace Sor.Controllers
 
             return Ok(modulos);
         }
+
         public IHttpActionResult Put(int moduloId, string psicologo)
         {
             if (string.IsNullOrEmpty(psicologo))

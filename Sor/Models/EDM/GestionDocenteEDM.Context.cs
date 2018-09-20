@@ -30,7 +30,9 @@ namespace Sor.Models.EDM
         public virtual DbSet<DocenteMateria> DocenteMateria { get; set; }
         public virtual DbSet<Materias> Materias { get; set; }
         public virtual DbSet<Modulos> Modulos { get; set; }
-        public virtual DbSet<DocenteScore> DocenteScore { get; set; }
         public virtual DbSet<Psicologos> Psicologos { get; set; }
+        public virtual DbSet<DocenteScore> DocenteScore { get; set; }
+        public virtual DbSet<MotivosRechazo> MotivosRechazo { get; set; }
+        public virtual DbSet<TernasxModulo> TernasxModulo { get; set; }
     }
 }

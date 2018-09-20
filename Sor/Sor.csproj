@@ -193,7 +193,9 @@
     <Compile Include="Controllers\DocentesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulosController.cs" />
+    <Compile Include="Controllers\MotivoRechazoController.cs" />
     <Compile Include="Controllers\PsicologosController.cs" />
+    <Compile Include="Controllers\TernaModuloController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -229,7 +231,13 @@
     <Compile Include="Models\EDM\Modulos.cs">
       <DependentUpon>GestionDocenteEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EDM\MotivosRechazo.cs">
+      <DependentUpon>GestionDocenteEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EDM\Psicologos.cs">
+      <DependentUpon>GestionDocenteEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TernasxModulo.cs">
       <DependentUpon>GestionDocenteEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ResultApi.cs" />
@@ -288,8 +296,8 @@
       <DependentUpon>GestionDocenteEDM.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\SorGestionDocente - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\SorGestionDocente - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\SorGestionDocente - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\SorGestionDocente - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -36,6 +36,7 @@
           <Property Name="CargaNotas" Type="bit" Nullable="false" />
           <Property Name="Porcentaje" Type="decimal" Precision="5" Scale="2" />
           <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="twiter" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Materias">
           <Key>
@@ -61,6 +62,15 @@
           <Property Name="Asignado" Type="bit" Nullable="false" />
           <Property Name="MateriaId" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="MotivosRechazo">
+          <Key>
+            <PropertyRef Name="MotivoRechazoId" />
+          </Key>
+          <Property Name="MotivoRechazoId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Psicologos">
           <Key>
             <PropertyRef Name="PsicologoId" />
@@ -69,6 +79,18 @@
           <Property Name="Cedula" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TernasxModulo">
+          <Key>
+            <PropertyRef Name="TernaModuloId" />
+          </Key>
+          <Property Name="TernaModuloId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuloId" Type="int" Nullable="false" />
+          <Property Name="DocenteScoreId" Type="int" Nullable="false" />
+          <Property Name="Rechazado" Type="bit" Nullable="false" />
+          <Property Name="MotivoRechazoId" Type="tinyint" />
+          <Property Name="Asignado" Type="bit" Nullable="false" />
+          <Property Name="CalificacionDocente" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK_DocenteMateria_Materia">
           <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
@@ -118,13 +140,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_MotivoRechazo">
+          <End Role="MotivosRechazo" Type="Self.MotivosRechazo" Multiplicity="0..1" />
+          <End Role="TernasxModulo" Type="Self.TernasxModulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotivosRechazo">
+              <PropertyRef Name="MotivoRechazoId" />
+            </Principal>
+            <Dependent Role="TernasxModulo">
+              <PropertyRef Name="MotivoRechazoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Terna_DocenteScore">
+          <End Role="DocenteScore" Type="Self.DocenteScore" Multiplicity="1" />
+          <End Role="TernasxModulo" Type="Self.TernasxModulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocenteScore">
+              <PropertyRef Name="DocenteScoreId" />
+            </Principal>
+            <Dependent Role="TernasxModulo">
+              <PropertyRef Name="DocenteScoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Terna_ModuloId">
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="1" />
+          <End Role="TernasxModulo" Type="Self.TernasxModulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulos">
+              <PropertyRef Name="ModuloId" />
+            </Principal>
+            <Dependent Role="TernasxModulo">
+              <PropertyRef Name="ModuloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GestionDocenteModelStoreContainer">
           <EntitySet Name="DepartamentosAcademicos" EntityType="Self.DepartamentosAcademicos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocenteMateria" EntityType="Self.DocenteMateria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocenteScore" EntityType="Self.DocenteScore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materias" EntityType="Self.Materias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulos" EntityType="Self.Modulos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MotivosRechazo" EntityType="Self.MotivosRechazo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Psicologos" EntityType="Self.Psicologos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TernasxModulo" EntityType="Self.TernasxModulo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DocenteMateria_Materia" Association="Self.FK_DocenteMateria_Materia">
             <End Role="Materias" EntitySet="Materias" />
             <End Role="DocenteMateria" EntitySet="DocenteMateria" />
@@ -140,6 +200,18 @@
           <AssociationSet Name="FK_Modulo_Materia" Association="Self.FK_Modulo_Materia">
             <End Role="Materias" EntitySet="Materias" />
             <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_MotivoRechazo" Association="Self.Fk_MotivoRechazo">
+            <End Role="MotivosRechazo" EntitySet="MotivosRechazo" />
+            <End Role="TernasxModulo" EntitySet="TernasxModulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Terna_DocenteScore" Association="Self.FK_Terna_DocenteScore">
+            <End Role="DocenteScore" EntitySet="DocenteScore" />
+            <End Role="TernasxModulo" EntitySet="TernasxModulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Terna_ModuloId" Association="Self.FK_Terna_ModuloId">
+            <End Role="Modulos" EntitySet="Modulos" />
+            <End Role="TernasxModulo" EntitySet="TernasxModulo" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -193,6 +265,7 @@
           <Property Name="Asignado" Type="Boolean" Nullable="false" />
           <Property Name="MateriaId" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Materias" Relationship="Self.FK_Modulo_Materia" FromRole="Modulos" ToRole="Materias" />
+          <NavigationProperty Name="TernasxModulo" Relationship="GestionDocenteModel.FK_Terna_ModuloId" FromRole="Modulos" ToRole="TernasxModulo" />
         </EntityType>
         <Association Name="FK_Materia_DptoAcademico">
           <End Role="DepartamentosAcademicos" Type="Self.DepartamentosAcademicos" Multiplicity="1" />
@@ -247,13 +320,36 @@
             <End Role="Materias" EntitySet="Materias" />
             <End Role="Modulos" EntitySet="Modulos" />
           </AssociationSet>
+          <EntitySet Name="Psicologos" EntityType="GestionDocenteModel.Psicologos" />
           <EntitySet Name="DocenteScore" EntityType="GestionDocenteModel.DocenteScore" />
+          <EntitySet Name="MotivosRechazo" EntityType="GestionDocenteModel.MotivosRechazo" />
+          <EntitySet Name="TernasxModulo" EntityType="GestionDocenteModel.TernasxModulo" />
           <AssociationSet Name="FK_DocenteMateria_ScoreDocente" Association="GestionDocenteModel.FK_DocenteMateria_ScoreDocente">
             <End Role="DocenteScore" EntitySet="DocenteScore" />
             <End Role="DocenteMateria" EntitySet="DocenteMateria" />
           </AssociationSet>
-          <EntitySet Name="Psicologos" EntityType="GestionDocenteModel.Psicologos" />
+          <AssociationSet Name="FK_Terna_DocenteScore" Association="GestionDocenteModel.FK_Terna_DocenteScore">
+            <End Role="DocenteScore" EntitySet="DocenteScore" />
+            <End Role="TernasxModulo" EntitySet="TernasxModulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Terna_ModuloId" Association="GestionDocenteModel.FK_Terna_ModuloId">
+            <End Role="Modulos" EntitySet="Modulos" />
+            <End Role="TernasxModulo" EntitySet="TernasxModulo" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_MotivoRechazo" Association="GestionDocenteModel.Fk_MotivoRechazo">
+            <End Role="MotivosRechazo" EntitySet="MotivosRechazo" />
+            <End Role="TernasxModulo" EntitySet="TernasxModulo" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Psicologos">
+          <Key>
+            <PropertyRef Name="PsicologoId" />
+          </Key>
+          <Property Name="PsicologoId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="DocenteScore">
           <Key>
             <PropertyRef Name="DocenteScoreId" />
@@ -267,8 +363,35 @@
           <Property Name="Ausentismos" Type="Byte" Nullable="false" />
           <Property Name="CargaNotas" Type="Boolean" Nullable="false" />
           <Property Name="Porcentaje" Type="Decimal" Precision="5" Scale="2" />
-          <NavigationProperty Name="DocenteMateria" Relationship="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" FromRole="DocenteScore" ToRole="DocenteMateria" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="twiter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DocenteMateria" Relationship="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" FromRole="DocenteScore" ToRole="DocenteMateria" />
+          <NavigationProperty Name="TernasxModulo" Relationship="GestionDocenteModel.FK_Terna_DocenteScore" FromRole="DocenteScore" ToRole="TernasxModulo" />
+        </EntityType>
+        <EntityType Name="MotivosRechazo">
+          <Key>
+            <PropertyRef Name="MotivoRechazoId" />
+          </Key>
+          <Property Name="MotivoRechazoId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TernasxModulo" Relationship="GestionDocenteModel.Fk_MotivoRechazo" FromRole="MotivosRechazo" ToRole="TernasxModulo" />
+        </EntityType>
+        <EntityType Name="TernasxModulo">
+          <Key>
+            <PropertyRef Name="TernaModuloId" />
+          </Key>
+          <Property Name="TernaModuloId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuloId" Type="Int32" Nullable="false" />
+          <Property Name="DocenteScoreId" Type="Int32" Nullable="false" />
+          <Property Name="Rechazado" Type="Boolean" Nullable="false" />
+          <Property Name="MotivoRechazoId" Type="Byte" />
+          <Property Name="Asignado" Type="Boolean" Nullable="false" />
+          <Property Name="CalificacionDocente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DocenteScore" Relationship="GestionDocenteModel.FK_Terna_DocenteScore" FromRole="TernasxModulo" ToRole="DocenteScore" />
+          <NavigationProperty Name="Modulos" Relationship="GestionDocenteModel.FK_Terna_ModuloId" FromRole="TernasxModulo" ToRole="Modulos" />
+          <NavigationProperty Name="MotivosRechazo" Relationship="GestionDocenteModel.Fk_MotivoRechazo" FromRole="TernasxModulo" ToRole="MotivosRechazo" />
         </EntityType>
         <Association Name="FK_DocenteMateria_ScoreDocente">
           <End Type="GestionDocenteModel.DocenteScore" Role="DocenteScore" Multiplicity="1" />
@@ -282,15 +405,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Psicologos">
-          <Key>
-            <PropertyRef Name="PsicologoId" />
-          </Key>
-          <Property Name="PsicologoId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
+        <Association Name="FK_Terna_DocenteScore">
+          <End Type="GestionDocenteModel.DocenteScore" Role="DocenteScore" Multiplicity="1" />
+          <End Type="GestionDocenteModel.TernasxModulo" Role="TernasxModulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocenteScore">
+              <PropertyRef Name="DocenteScoreId" />
+            </Principal>
+            <Dependent Role="TernasxModulo">
+              <PropertyRef Name="DocenteScoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Terna_ModuloId">
+          <End Type="GestionDocenteModel.Modulos" Role="Modulos" Multiplicity="1" />
+          <End Type="GestionDocenteModel.TernasxModulo" Role="TernasxModulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulos">
+              <PropertyRef Name="ModuloId" />
+            </Principal>
+            <Dependent Role="TernasxModulo">
+              <PropertyRef Name="ModuloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_MotivoRechazo">
+          <End Type="GestionDocenteModel.MotivosRechazo" Role="MotivosRechazo" Multiplicity="0..1" />
+          <End Type="GestionDocenteModel.TernasxModulo" Role="TernasxModulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotivosRechazo">
+              <PropertyRef Name="MotivoRechazoId" />
+            </Principal>
+            <Dependent Role="TernasxModulo">
+              <PropertyRef Name="MotivoRechazoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -342,9 +492,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Psicologos">
+            <EntityTypeMapping TypeName="GestionDocenteModel.Psicologos">
+              <MappingFragment StoreEntitySet="Psicologos">
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="PsicologoId" ColumnName="PsicologoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DocenteScore">
             <EntityTypeMapping TypeName="GestionDocenteModel.DocenteScore">
               <MappingFragment StoreEntitySet="DocenteScore">
+                <ScalarProperty Name="twiter" ColumnName="twiter" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
                 <ScalarProperty Name="CargaNotas" ColumnName="CargaNotas" />
@@ -358,13 +519,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Psicologos">
-            <EntityTypeMapping TypeName="GestionDocenteModel.Psicologos">
-              <MappingFragment StoreEntitySet="Psicologos">
-                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <EntitySetMapping Name="MotivosRechazo">
+            <EntityTypeMapping TypeName="GestionDocenteModel.MotivosRechazo">
+              <MappingFragment StoreEntitySet="MotivosRechazo">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-                <ScalarProperty Name="PsicologoId" ColumnName="PsicologoId" />
+                <ScalarProperty Name="MotivoRechazoId" ColumnName="MotivoRechazoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TernasxModulo">
+            <EntityTypeMapping TypeName="GestionDocenteModel.TernasxModulo">
+              <MappingFragment StoreEntitySet="TernasxModulo">
+                <ScalarProperty Name="CalificacionDocente" ColumnName="CalificacionDocente" />
+                <ScalarProperty Name="Asignado" ColumnName="Asignado" />
+                <ScalarProperty Name="MotivoRechazoId" ColumnName="MotivoRechazoId" />
+                <ScalarProperty Name="Rechazado" ColumnName="Rechazado" />
+                <ScalarProperty Name="DocenteScoreId" ColumnName="DocenteScoreId" />
+                <ScalarProperty Name="ModuloId" ColumnName="ModuloId" />
+                <ScalarProperty Name="TernaModuloId" ColumnName="TernaModuloId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
