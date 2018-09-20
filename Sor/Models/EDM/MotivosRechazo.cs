@@ -12,26 +12,19 @@ namespace Sor.Models.EDM
     using System;
     using System.Collections.Generic;
     
-    public partial class Modulos
+    public partial class MotivosRechazo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Modulos()
+        public MotivosRechazo()
         {
             this.TernasxModulo = new HashSet<TernasxModulo>();
         }
     
-        public int ModuloId { get; set; }
+        public byte MotivoRechazoId { get; set; }
         public string Nombre { get; set; }
-        public System.DateTime FechaInicio { get; set; }
-        public System.DateTime FechaFin { get; set; }
-        public short HorasTotales { get; set; }
-        public decimal HorasSemana { get; set; }
-        public string Psicologo { get; set; }
-        public bool EsPago { get; set; }
-        public bool Asignado { get; set; }
-        public short MateriaId { get; set; }
+        public string Descripcion { get; set; }
+        public bool Estado { get; set; }
     
-        public virtual Materias Materias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TernasxModulo> TernasxModulo { get; set; }
     }
