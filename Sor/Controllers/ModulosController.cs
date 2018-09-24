@@ -24,7 +24,6 @@ namespace Sor.Controllers
                          EsPago = x.EsPago,
                          MateriaId = x.MateriaId
                      }).ToList<Modulos>();
-
             }
 
             if (modulos.Count < 1)
@@ -48,9 +47,9 @@ namespace Sor.Controllers
                          HorasTotales = x.HorasTotales,
                          HorasSemana = x.HorasSemana,
                          Psicologo = x.Psicologo,
-                         Asignado=x.Asignado,
-                         EsPago=x.EsPago,
-                         MateriaId= x.MateriaId
+                         Asignado = x.Asignado,
+                         EsPago = x.EsPago,
+                         MateriaId = x.MateriaId
                      }).FirstOrDefault();
 
             }
@@ -67,7 +66,7 @@ namespace Sor.Controllers
             List<Modulos> modulos = new List<Modulos>();
             using (var db = new GestionDocenteEntities())
             {
-                modulos = db.Modulos.Where(x => x.Materias.DeptoAcademicoId == dptoAcademicoId).ToList();              
+                modulos = db.Modulos.Where(x => x.Materias.DeptoAcademicoId == dptoAcademicoId && !x.Asignado).ToList();
             }
 
             if (modulos.Count < 1)
@@ -76,19 +75,49 @@ namespace Sor.Controllers
             return Ok(modulos);
         }
 
-        public IHttpActionResult Put(int moduloId, string psicologo)
+        [HttpGet]
+        public IHttpActionResult PutAsignaPsicologo(int moduloId, string psicologo)
         {
             if (string.IsNullOrEmpty(psicologo))
                 return BadRequest("Not a valid model");
 
+            int result = 0;
             using (var db = new GestionDocenteEntities())
             {
                 var modulo = db.Modulos.Where(x => x.ModuloId == moduloId).FirstOrDefault();
-                modulo.Psicologo = psicologo;
-                db.SaveChanges();
+                if (modulo != null && modulo.ModuloId > 0)
+                {
+                    modulo.Psicologo = psicologo;
+                    result = db.SaveChanges();
+                }
+                else
+                    return NotFound();
             }
 
-            return Ok();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IHttpActionResult AsignaDocente(int moduloId, int docenteId)
+        {
+            int result = 0;
+            using (var db = new GestionDocenteEntities())
+            {
+                var modulo = db.Modulos.Where(x => x.ModuloId == moduloId).FirstOrDefault();
+                if (modulo != null && modulo.ModuloId > 0)
+                {
+                    modulo.DocenteId = docenteId;
+                    modulo.Asignado = true;
+                }
+
+                var docente = db.DocenteScore.Where(x => x.DocenteScoreId == docenteId).FirstOrDefault();
+                if (docente != null && modulo.DocenteId > 0)
+                    docente.HorasActuales += modulo.HorasSemana;
+
+                result = db.SaveChanges();
+            }
+
+            return Ok(result);
         }
 
     }

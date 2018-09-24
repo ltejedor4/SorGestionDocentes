@@ -13,7 +13,7 @@ namespace Sor.Controllers
         [HttpGet]
         public IHttpActionResult PutRechazoTernaxModulo(int moduloId, int scoreId, byte tipoRechazo)
         {
-            int result = 0;
+            int existeTerna = 0;
             using (var db = new GestionDocenteEntities())
             {
                 var terna = db.TernasxModulo.Include("DocenteScore").Where(x => x.ModuloId == moduloId && x.DocenteScoreId == scoreId).FirstOrDefault();
@@ -25,14 +25,16 @@ namespace Sor.Controllers
                     var porcentajeActual = terna.DocenteScore.Porcentaje;
                     var descuento = db.MotivosRechazo.Where(x => x.MotivoRechazoId == tipoRechazo).FirstOrDefault();
                     terna.DocenteScore.Porcentaje = porcentajeActual - (descuento != null ? descuento.PuntosDescuento : 5);
+                    db.SaveChanges();
 
-                    result = db.SaveChanges();
+                    existeTerna = db.TernasxModulo.Where(x => x.ModuloId == moduloId && !x.Rechazado).Count();
                 }
                 else
                     return NotFound();
             }
 
-            return Ok(result);
+            return Json(new { success = true, numDocentesTerna = existeTerna });
+            
         }
     }
 }

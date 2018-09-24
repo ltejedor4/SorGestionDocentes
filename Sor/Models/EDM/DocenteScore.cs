@@ -17,8 +17,8 @@ namespace Sor.Models.EDM
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DocenteScore()
         {
-            this.DocenteMateria = new HashSet<DocenteMateria>();
             this.TernasxModulo = new HashSet<TernasxModulo>();
+            this.DocenteMateria = new HashSet<DocenteMateria>();
         }
     
         public int DocenteScoreId { get; set; }
@@ -34,8 +34,8 @@ namespace Sor.Models.EDM
         public string Twiter { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocenteMateria> DocenteMateria { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TernasxModulo> TernasxModulo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocenteMateria> DocenteMateria { get; set; }
     }
 }

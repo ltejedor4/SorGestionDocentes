@@ -26,9 +26,9 @@ namespace Sor.Models.EDM
         public byte DeptoAcademicoId { get; set; }
         public bool Estado { get; set; }
     
-        public virtual DepartamentosAcademicos DepartamentosAcademicos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteMateria> DocenteMateria { get; set; }
+        public virtual DepartamentosAcademicos DepartamentosAcademicos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Modulos> Modulos { get; set; }
     }

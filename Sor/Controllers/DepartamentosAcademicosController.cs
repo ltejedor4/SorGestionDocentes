@@ -16,7 +16,7 @@ namespace Sor.Controllers
             List<DepartamentosAcademicos> departamentos = new List<DepartamentosAcademicos>();
             using (var db = new GestionDocenteEntities())
             {
-                departamentos = db.DepartamentosAcademicos.ToList();               
+                departamentos = db.DepartamentosAcademicos.Where(x=>x.Estado).ToList();               
             }
 
             if (departamentos.Count < 1)

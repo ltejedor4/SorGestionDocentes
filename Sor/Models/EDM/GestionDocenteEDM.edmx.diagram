@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="df030d44bb8d46b28cf9ceb874f28513" Name="Diagram1">
-        <EntityTypeShape EntityType="GestionDocenteModel.DepartamentosAcademicos" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestionDocenteModel.DocenteMateria" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="GestionDocenteModel.Materias" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestionDocenteModel.Modulos" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
-        <AssociationConnector Association="GestionDocenteModel.FK_Materia_DptoAcademico" ManuallyRouted="false" />
-        <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_Materia" ManuallyRouted="false" />
-        <AssociationConnector Association="GestionDocenteModel.FK_Modulo_Materia" ManuallyRouted="false" />
         <EntityTypeShape EntityType="GestionDocenteModel.Psicologos" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="GestionDocenteModel.DocenteScore" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="GestionDocenteModel.MotivosRechazo" Width="1.5" PointX="6.125" PointY="0.875" />
-        <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" />
         <EntityTypeShape EntityType="GestionDocenteModel.TernasxModulo" Width="1.5" PointX="8.375" PointY="4.375" />
         <AssociationConnector Association="GestionDocenteModel.FK_Terna_DocenteScore" />
-        <AssociationConnector Association="GestionDocenteModel.FK_Terna_ModuloId" />
         <AssociationConnector Association="GestionDocenteModel.Fk_MotivoRechazo" />
+        <EntityTypeShape EntityType="GestionDocenteModel.DocenteMateria" Width="1.5" PointX="5.25" PointY="4.25" />
+        <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_Materia" />
+        <AssociationConnector Association="GestionDocenteModel.FK_DocenteMateria_ScoreDocente" />
+        <EntityTypeShape EntityType="GestionDocenteModel.DepartamentosAcademicos" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="GestionDocenteModel.Modulos" Width="1.5" PointX="5.25" PointY="7.5" />
+        <AssociationConnector Association="GestionDocenteModel.FK_Materia_DptoAcademico" />
+        <AssociationConnector Association="GestionDocenteModel.FK_Modulo_Materia" />
+        <AssociationConnector Association="GestionDocenteModel.FK_Terna_ModuloId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

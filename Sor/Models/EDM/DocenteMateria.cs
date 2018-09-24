@@ -17,6 +17,7 @@ namespace Sor.Models.EDM
         public int MateriaxDocenteId { get; set; }
         public short MateriaId { get; set; }
         public int ScoreDocenteId { get; set; }
+        public bool Estado { get; set; }
     
         public virtual Materias Materias { get; set; }
         public virtual DocenteScore DocenteScore { get; set; }

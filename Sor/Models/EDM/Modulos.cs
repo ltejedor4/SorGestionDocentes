@@ -30,6 +30,7 @@ namespace Sor.Models.EDM
         public bool EsPago { get; set; }
         public bool Asignado { get; set; }
         public short MateriaId { get; set; }
+        public Nullable<int> DocenteId { get; set; }
     
         public virtual Materias Materias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

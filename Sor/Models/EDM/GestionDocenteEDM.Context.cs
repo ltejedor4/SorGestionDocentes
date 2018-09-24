@@ -12,7 +12,7 @@ namespace Sor.Models.EDM
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class GestionDocenteEntities : DbContext
     {
         public GestionDocenteEntities()
@@ -20,19 +20,19 @@ namespace Sor.Models.EDM
         {
             this.Configuration.ProxyCreationEnabled = false;
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
-        public virtual DbSet<DepartamentosAcademicos> DepartamentosAcademicos { get; set; }
-        public virtual DbSet<DocenteMateria> DocenteMateria { get; set; }
+    
         public virtual DbSet<Materias> Materias { get; set; }
-        public virtual DbSet<Modulos> Modulos { get; set; }
         public virtual DbSet<Psicologos> Psicologos { get; set; }
         public virtual DbSet<DocenteScore> DocenteScore { get; set; }
         public virtual DbSet<MotivosRechazo> MotivosRechazo { get; set; }
         public virtual DbSet<TernasxModulo> TernasxModulo { get; set; }
+        public virtual DbSet<DocenteMateria> DocenteMateria { get; set; }
+        public virtual DbSet<DepartamentosAcademicos> DepartamentosAcademicos { get; set; }
+        public virtual DbSet<Modulos> Modulos { get; set; }
     }
 }
